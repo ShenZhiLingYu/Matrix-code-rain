@@ -1,5 +1,5 @@
 
-package your.PageName;
+package cn.tedu.day03;
 
 import java.awt.*;  
 import java.awt.event.ActionEvent;
@@ -18,13 +18,13 @@ public class Rain extends JDialog implements ActionListener{
 		private Random random = new Random();
 		private Dimension screenSize;
 		private JPanel graphicsPanel;
-		//è¡Œé«˜ï¼Œåˆ—å®½
+		//ĞĞ¸ß£¬ÁĞ¿í
 		private final static int gap = 20;
-		//å­˜æ”¾é›¨ç‚¹é¡¶éƒ¨çš„ä½ç½®ä¿¡æ¯ï¼ˆmarginTopï¼‰
+		//´æ·ÅÓêµã¶¥²¿µÄÎ»ÖÃĞÅÏ¢£¨marginTop£©
 		private int[] posArr;
-		//è¡Œæ•°
+		//ĞĞÊı
 		private int line;
-		//åˆ—æ•°
+		//ÁĞÊı
 		private int columns;
 
 		public Rain(){
@@ -35,18 +35,18 @@ public class Rain extends JDialog implements ActionListener{
 			setLayout(new BorderLayout());
 			graphicsPanel = new GraphicsPanel();
 			add(graphicsPanel,BorderLayout.CENTER);
-			//è®¾ç½®å…‰æ ‡ä¸å¯è§
+			//ÉèÖÃ¹â±ê²»¿É¼û
 			Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
 			Image image = defaultToolkit.createImage(new MemoryImageSource(0,0,null,0,0));
 			Cursor invisibleCursor = defaultToolkit.createCustomCursor(image,new Point(0,0),"cursor");
 			setCursor(invisibleCursor);
-			//ESCé”®é€€å‡º
+			//ESC¼üÍË³ö
 			KeyPressListener keyPressListener = new KeyPressListener();
 			this.addKeyListener(keyPressListener); 
 			//this.setAlwaysOnTop(true);
-			//å»æ ‡é¢˜æ 
+			//È¥±êÌâÀ¸
 			this.setUndecorated(true);
-			//å…¨å±
+			//È«ÆÁ
 			this.getGraphicsConfiguration().getDevice().setFullScreenWindow(this);
 			this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			setVisible(true);
@@ -55,25 +55,30 @@ public class Rain extends JDialog implements ActionListener{
 			line = screenSize.height/gap;
 			columns = screenSize.width/gap;
 			
+			
 			posArr = new int[columns + 7 ];
 			random = new Random();
 			for(int i = 0;i<posArr.length;i++){
 				posArr[i] = random.nextInt(line);
 			}
 			
-			//æ¯ç§’10å¸§
+			//Ã¿Ãë10Ö¡
+			
 			new Timer(100,this).start();
+			
 		}
 		
 		/*
-		 * éšæœºå­—ç¬¦
+		 * 
+		 * Ëæ»ú×Ö·û
 		 */
 		
 		private char getChr(){
 			return (char) (random.nextInt(94)+33);
 			
 		}
-				
+		
+		
 		public void actionPerformed(ActionEvent e){
 			graphicsPanel.repaint();
 		}
@@ -87,7 +92,7 @@ public class Rain extends JDialog implements ActionListener{
 				g2d.setColor(Color.BLACK);
 				g2d.fillRect(0,0,screenSize.width,screenSize.height);
 				
-				//å½“å‰åˆ—
+				//µ±Ç°ÁĞ
 				int currentColumn = 0;
 				for(int x = 0;x<screenSize.width; x +=gap){
 					int endPos = posArr[currentColumn];
@@ -95,7 +100,7 @@ public class Rain extends JDialog implements ActionListener{
 					g2d.drawString(String.valueOf(getChr()),x,endPos*gap);
 					int cg =0;
 					for(int j = endPos-15;j<endPos; j++){
-						//é¢œè‰²æ¸å˜
+						//ÑÕÉ«½¥±ä
 						cg += 20;
 						if(cg >255){
 							cg = 255;
@@ -105,9 +110,9 @@ public class Rain extends JDialog implements ActionListener{
 						g2d.drawString(String.valueOf(getChr()),x,j*gap);
 						
 					}
-					//æ¯æ”¾å®Œä¸€å¸§ï¼Œå½“å‰åˆ—ä¸Šé›¨ç‚¹çš„ä½ç½®éšæœºä¸‹ä¸€1-5è¡Œ
+					//Ã¿·ÅÍêÒ»Ö¡£¬µ±Ç°ÁĞÉÏÓêµãµÄÎ»ÖÃËæ»úÏÂÒ»1-5ĞĞ
 					posArr[currentColumn] += random.nextInt(5);
-					//å½“é›¨ç‚¹ä½ç½®è¶…è¿‡å±å¹•é«˜åº¦æ—¶ï¼Œé‡æ–°äº§ç”Ÿä¸€ä¸ªéšæœºä½ç½®
+					//µ±ÓêµãÎ»ÖÃ³¬¹ıÆÁÄ»¸ß¶ÈÊ±£¬ÖØĞÂ²úÉúÒ»¸öËæ»úÎ»ÖÃ
 					if(posArr[currentColumn] * gap > getHeight()){
 						posArr[currentColumn] = random.nextInt(line);
 						
@@ -131,10 +136,16 @@ public class Rain extends JDialog implements ActionListener{
 				}
 				
 				
-			}		
+			}
 			
-			public static void main(String[] args){	
-				new Rain();		
+			
+			
+			
+			
+			public static void main(String[] args){
+				
+				new Rain();
+		
 	}
 
 }
